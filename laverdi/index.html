@@ -2,37 +2,51 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Relatório Pedagógico Estruturado - Joaquim Augusto Arantes Laverdi</title>
+    <title>Relatório Joaquim Augusto - 7ºF</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
-        .no-print { text-align: center; margin-bottom: 20px; position: sticky; top: 0; background: #f0f2f5; padding: 15px; z-index: 100; border-bottom: 1px solid #ddd; }
+        /* Otimização para página única */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 10px; font-size: 10pt; }
+        .no-print { text-align: center; margin-bottom: 10px; position: sticky; top: 0; z-index: 100; }
         
-        #documento { background: white; width: 210mm; min-height: 297mm; padding: 20mm; margin: auto; box-shadow: 0 0 20px rgba(0,0,0,0.1); box-sizing: border-box; }
+        #documento { 
+            background: white; width: 210mm; height: 297mm; /* Tamanho fixo A4 */
+            padding: 15mm; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+            box-sizing: border-box; display: flex; flex-direction: column;
+        }
         
-        .topo { text-align: center; border-bottom: 2px solid #2c3e50; margin-bottom: 20px; }
-        .topo h1 { font-size: 16pt; margin: 0; color: #2c3e50; text-transform: uppercase; }
+        .topo { text-align: center; border-bottom: 2px solid #2c3e50; margin-bottom: 10px; padding-bottom: 5px; }
+        .topo h1 { font-size: 14pt; margin: 0; color: #2c3e50; }
         
-        .aluno-box { background: #f8f9fa; border: 1px solid #dee2e6; padding: 12px; border-left: 6px solid #2c3e50; margin-bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; font-size: 10pt; }
+        .aluno-box { 
+            background: #f8f9fa; border: 1px solid #dee2e6; padding: 8px; 
+            border-left: 5px solid #2c3e50; margin-bottom: 10px; 
+            display: grid; grid-template-columns: 1fr 1fr; font-size: 9pt;
+        }
         
-        h2 { font-size: 11pt; color: white; background: #2c3e50; padding: 5px 10px; margin-top: 15px; text-transform: uppercase; border-radius: 3px; }
-        h3 { font-size: 10pt; color: #2c3e50; margin-bottom: 5px; border-bottom: 1px solid #eee; }
+        h2 { font-size: 10pt; color: white; background: #2c3e50; padding: 4px 10px; margin: 8px 0 5px 0; text-transform: uppercase; }
         
-        .grid-analise { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-        .item-check { font-size: 9pt; display: flex; align-items: center; gap: 5px; }
+        .grid-analise { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-bottom: 5px; }
+        .item-check { font-size: 8.5pt; display: flex; align-items: center; gap: 5px; }
         
-        textarea { width: 100%; height: 70px; border: 1px solid #ccc; border-radius: 4px; padding: 8px; font-family: inherit; font-size: 9pt; resize: none; margin-top: 5px; box-sizing: border-box; }
+        textarea { 
+            width: 100%; height: 55px; border: 1px solid #ccc; border-radius: 4px; 
+            padding: 8px; font-family: inherit; font-size: 9pt; resize: none; box-sizing: border-box; 
+        }
         
-        .signature-area { margin-top: 20px; text-align: center; border: 1px dashed #aaa; padding: 10px; background: #fafafa; }
+        .signature-input-area { margin-top: 10px; text-align: center; border: 1px dashed #aaa; padding: 5px; background: #fafafa; }
         #canvas-assinatura { border: 1px solid #000; background: white; cursor: crosshair; touch-action: none; }
         
-        #selo-final { display: none; margin-top: 30px; border: 2px solid #1a2a3a; padding: 15px; background: #fcfcfc; text-align: center; }
-        #selo-final img { max-width: 200px; }
-        .meta-dados { font-family: 'Courier New', monospace; font-size: 8pt; color: #444; margin-top: 10px; text-align: left; }
+        #selo-final { 
+            display: none; margin-top: 15px; border: 2px solid #1a2a3a; padding: 10px; 
+            background: #fcfcfc; text-align: center; page-break-inside: avoid;
+        }
+        #selo-final img { max-width: 180px; height: auto; }
+        .meta-dados { font-family: 'Courier New', monospace; font-size: 8pt; color: #444; margin-top: 5px; text-align: left; line-height: 1.2; }
 
-        .btn { padding: 10px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin: 5px; }
+        .btn { padding: 8px 18px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin: 5px; }
         .btn-success { background-color: #27ae60; color: white; }
         .btn-danger { background-color: #c0392b; color: white; }
     </style>
@@ -41,13 +55,13 @@
 
 <div class="no-print">
     <button class="btn btn-success" id="btn-finalizar" onclick="gerarSelo()">🔒 Autenticar e Assinar</button>
-    <button class="btn btn-danger" id="btn-pdf" style="display:none" onclick="exportarPDF()">📄 Baixar Relatório PDF</button>
+    <button class="btn btn-danger" id="btn-pdf" style="display:none" onclick="exportarPDF()">📄 Baixar PDF (1 Página)</button>
 </div>
 
 <div id="documento">
     <div class="topo">
         <h1>Relatório de Observação Pedagógica</h1>
-        <p style="font-size: 9pt; margin-top: 5px;">Documento Restrito - Fins de Avaliação Médica/Terapêutica</p>
+        <p style="font-size: 8pt; margin: 2px 0;">Subsídio para Avaliação Clínica Especializada</p>
     </div>
 
     <div class="aluno-box">
@@ -60,54 +74,40 @@
     <h2>1. Funções Executivas e Comprometimento</h2>
     <div class="grid-analise">
         <div class="item-check"><input type="checkbox"> Inicia as tarefas prontamente</div>
-        <div class="item-check"><input type="checkbox"> Mantém o foco até o fim da atividade</div>
-        <div class="item-check"><input type="checkbox"> Organiza o material escolar com autonomia</div>
+        <div class="item-check"><input type="checkbox"> Mantém o foco até o fim</div>
+        <div class="item-check"><input type="checkbox"> Organiza material com autonomia</div>
         <div class="item-check"><input type="checkbox"> Necessita de comandos repetidos</div>
-        <div class="item-check"><input type="checkbox"> Entrega lições de casa/trabalhos no prazo</div>
-        <div class="item-check"><input type="checkbox"> Apresenta cansaço ou desinteresse rápido</div>
     </div>
-    <textarea placeholder="Análise sobre o ritmo de trabalho e autonomia acadêmica..."></textarea>
+    <textarea placeholder="Análise breve sobre autonomia e ritmo..."></textarea>
 
     <h2>2. Comportamento e Regulação Emocional</h2>
     <div class="grid-analise">
-        <div class="item-check"><input type="checkbox"> Tolera frustrações (erros/perdas)</div>
-        <div class="item-check"><input type="checkbox"> Apresenta agitação motora excessiva</div>
-        <div class="item-check"><input type="checkbox"> Interrompe a fala de terceiros frequentemente</div>
-        <div class="item-check"><input type="checkbox"> Respeita limites e figuras de autoridade</div>
-        <div class="item-check"><input type="checkbox"> Oscilações de humor durante o período</div>
-        <div class="item-check"><input type="checkbox"> Reações impulsivas a conflitos</div>
+        <div class="item-check"><input type="checkbox"> Tolera frustrações</div>
+        <div class="item-check"><input type="checkbox"> Agitação motora excessiva</div>
+        <div class="item-check"><input type="checkbox"> Interrompe a fala de terceiros</div>
+        <div class="item-check"><input type="checkbox"> Respeita limites e autoridade</div>
     </div>
-    <textarea placeholder="Análise sobre a conduta disciplinar e reações emocionais em sala..."></textarea>
+    <textarea placeholder="Análise sobre conduta e reações emocionais..."></textarea>
 
-    <h2>3. Interação Social e Aspectos Atitudinais</h2>
-    <textarea placeholder="Como o aluno se integra aos grupos? Existe isolamento ou liderança negativa? Como é a empatia com os pares?"></textarea>
+    <h2>3. Interação Social e Visão Geral</h2>
+    <textarea style="height: 70px;" placeholder="Relato sobre integração com pares, uso de celular e outras observações relevantes..."></textarea>
 
-    <h2>4. Outras Observações de Visão Pedagógica</h2>
-    <textarea placeholder="Uso de telas/celular em aula, participação em discussões orais, habilidades específicas ou talentos observados..."></textarea>
-
-    <div id="campos-prof" style="margin-top: 15px; display: flex; gap: 15px; font-size: 9pt;">
-        <div style="flex:1">
-            <label><strong>Nome do Professor(a):</strong></label>
-            <input type="text" id="inputNome" style="width:100%; padding: 5px;">
-        </div>
-        <div style="flex:1">
-            <label><strong>Disciplina:</strong></label>
-            <input type="text" id="inputDisc" style="width:100%; padding: 5px;">
-        </div>
+    <div id="campos-prof" style="margin-top: 10px; display: flex; gap: 10px;">
+        <div style="flex:1"><label style="font-size: 8pt;"><strong>Professor:</strong></label><input type="text" id="inputNome" style="width:100%; padding: 4px;"></div>
+        <div style="flex:1"><label style="font-size: 8pt;"><strong>Disciplina:</strong></label><input type="text" id="inputDisc" style="width:100%; padding: 4px;"></div>
     </div>
 
-    <div class="signature-area" id="area-desenho">
-        <p style="margin:0; font-size: 9pt;"><strong>Assinatura Digital (Desenhe abaixo):</strong></p>
-        <canvas id="canvas-assinatura" width="400" height="120"></canvas><br>
-        <button onclick="signaturePad.clear()" style="font-size: 8pt; cursor:pointer;">Limpar</button>
+    <div class="signature-input-area" id="area-desenho">
+        <canvas id="canvas-assinatura" width="400" height="100"></canvas><br>
+        <button onclick="signaturePad.clear()" style="font-size: 7pt;">Limpar Assinatura</button>
     </div>
 
     <div id="selo-final">
         <img id="img-assinatura" src="">
         <div class="meta-dados">
             <strong>DOCUMENTO AUTENTICADO:</strong> <span id="resNome"></span><br>
-            <strong>DISCIPLINA:</strong> <span id="resDisc"></span> | <strong>HASH:</strong> <span id="resHash"></span><br>
-            <strong>DATA/HORA DO REGISTRO:</strong> <span id="resData"></span>
+            <strong>DISCIPLINA:</strong> <span id="resDisc"></span> | <strong>ID:</strong> <span id="resHash"></span><br>
+            <strong>REGISTRO:</strong> <span id="resData"></span>
         </div>
     </div>
 </div>
@@ -120,10 +120,10 @@
     function gerarSelo() {
         const nome = document.getElementById('inputNome').value;
         const disc = document.getElementById('inputDisc').value;
-        if (signaturePad.isEmpty() || !nome || !disc) { alert("Preencha todos os campos e assine."); return; }
+        if (signaturePad.isEmpty() || !nome || !disc) { alert("Preencha tudo e assine."); return; }
 
         const agora = new Date();
-        const hash = "PED-" + Math.random().toString(36).substring(2, 8).toUpperCase() + "/" + agora.getFullYear();
+        const hash = "AUT-" + Math.random().toString(36).substring(2, 7).toUpperCase() + "-" + agora.getFullYear();
 
         document.getElementById('img-assinatura').src = signaturePad.toDataURL();
         document.getElementById('resNome').innerText = nome.toUpperCase();
@@ -139,7 +139,12 @@
     }
 
     function exportarPDF() {
-        const opt = { margin: 0, filename: `Relatorio_Pedagogico_Joaquim_Augusto.pdf`, image: { type: 'jpeg', quality: 1 }, html2canvas: { scale: 3 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+        const opt = { 
+            margin: 0, 
+            filename: `Relatorio_Joaquim_7F.pdf`, 
+            html2canvas: { scale: 2, useCORS: true }, 
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } 
+        };
         html2pdf().set(opt).from(document.getElementById('documento')).save();
     }
 </script>
